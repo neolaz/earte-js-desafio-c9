@@ -180,15 +180,31 @@ const ordernarDocumentos = () => {
     }
 }
 
+const eliminarDocumento = (id) => {
+    listaDocumentos = listaDocumentos.filter(d => d.id != id);
+    mostrarListadoDocumentos();
+}
+
 const mostrarListadoDocumentos = () => {    
+    if(listaDocumentos.length == 0){
+        cabecerasListadoElement.innerHTML = `
+        <div class="col-xl-2 offset-md-5">
+            <div class="containerInput alignCenter">
+                <span class="textGeneric" for="numero">Aún no hay Documentos generados</span>
+            </div>
+        </div>
+        `;
+    }
     if(listaDocumentos.length == 1){
         cabecerasListadoElement.innerHTML = `
-            <div class="col-xl-2 offset-md-1">
+            <div class="col-xl-1 offset-md-1">
+            </div>
+            <div class="col-xl-2">
                 <div class="containerInput alignCenter">
                     <span class="textGeneric" for="numero">Tipo Documento</span>
                 </div>
             </div>
-            <div class="col-xl-2">
+            <div class="col-xl-1">
                 <div class="containerInput alignCenter">
                     <span class="textGeneric" for="producto">Centro Emisor</span>
                 </div>
@@ -212,17 +228,24 @@ const mostrarListadoDocumentos = () => {
     }
 
     ordernarDocumentos();
-
     documentoRowElement.innerHTML = '';
+
     listaDocumentos.forEach( (doc) => { 
         documentoRowElement.innerHTML += `
             <div class="row">
-                <div class="col-xl-2 offset-md-1">
+                <div class="col-xl-1 offset-md-1">
+                    <div class="alignRigth">
+                        <a onclick="eliminarDocumento(${doc.id})">
+                            <img src="img/delete.png" alt="Eliminar Documento">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-2">
                     <div class="containerInput alignCenter">
                         <p class="textGeneric">${doc.tipo}</p>
                     </div>
                 </div>
-                <div class="col-xl-2">
+                <div class="col-xl-1">
                     <div class="containerInput alignCenter">
                         <p class="textGeneric">${doc.centroEmisor}</p>
                     </div>
